@@ -3,6 +3,7 @@ from cycles import *
 
 pygame.init()
 pygame.display.set_caption("Neverending")
+pygame.mouse.set_visible(False)
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 500
@@ -11,7 +12,8 @@ clock = pygame.time.Clock()
 
 ENV = {
     "delta_time": 0,
-    "global_offset": (0, 0)
+    "global_offset": (0, 0),
+    "mouse_x": 0, "mouse_y": 0
 }
 
 
@@ -19,6 +21,11 @@ def handle_common_event(event):
     if event.type == pygame.QUIT:
         pygame.quit()
         sys.exit()
+    elif event.type == pygame.MOUSEMOTION:
+        new_mouse_pos = pygame.mouse.get_pos()
+        ENV["delta_x"] = new_mouse_pos[0] - ENV["mouse_x"]
+        ENV["delta_y"] = new_mouse_pos[1] - ENV["mouse_y"]
+        ENV["mouse_x"], ENV["mouse_y"] = new_mouse_pos
 
 
 def draw_at_frame(pos, sheet, frame, size):

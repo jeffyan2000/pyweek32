@@ -1,5 +1,5 @@
 from config import *
-
+from maps import *
 
 class Game:
     def __init__(self):
@@ -13,7 +13,8 @@ class Game:
         pass
 
     def draw(self):
-        pass
+        screen.fill((146, 252, 249))
+        map1.draw()
 
     def handle_event(self, event):
         pass
@@ -27,4 +28,5 @@ class Game:
                 self.handle_event(event)
             self.update()
             self.draw()
+            screen.blit(texture_lib["hand"], (ENV["mouse_x"], ENV["mouse_y"]))
             pygame.display.flip()
