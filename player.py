@@ -72,7 +72,7 @@ class Player:
 
         prev_pos = self.pos[0], self.pos[1]
 
-        if self.xDirection != 0:
+        if self.xDirection != 0 or self.yDirection != 0:
             self.move(ENV["delta_time"] * self.walk_cycle.get_movement() * self.xDirection,
                       ENV["delta_time"] * self.walk_cycle.get_movement() * self.yDirection)
             self.walk_cycle.tick()
@@ -82,4 +82,3 @@ class Player:
 
         self.move_camera(self.pos[0] - prev_pos[0], self.pos[1] - prev_pos[1])
         ENV["global_offset"] = (self.pos[0] - self.offset[0], self.pos[1] - self.offset[1])
-        
