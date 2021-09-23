@@ -7,6 +7,7 @@ pygame.mouse.set_visible(False)
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 500
+DEFAULT_CENTER = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
