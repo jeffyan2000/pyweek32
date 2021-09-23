@@ -1,23 +1,27 @@
 from config import *
 from maps import *
+from player import *
 
 class Game:
     def __init__(self):
         self.dead = False
         self.fps_cap = 40
+        self.player = Player(map1)
+
 
     def load_map(self, map_json):
         pass
 
     def update(self):
-        pass
+        self.player.update()
 
     def draw(self):
         screen.fill((146, 252, 249))
         map1.draw()
+        self.player.draw()
 
     def handle_event(self, event):
-        pass
+        self.player.handle_event(event)
 
     def start(self):
         self.update()
