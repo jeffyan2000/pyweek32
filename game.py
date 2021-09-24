@@ -1,13 +1,20 @@
 from config import *
 from maps import *
 from player import *
+from inventory import *
+from mission import *
 
 class Game:
     def __init__(self):
         self.dead = False
         self.fps_cap = 40
         self.player = Player(map1)
-
+        map1.set_player(self.player)
+        self.inventory = Inventory()
+        self.inventory.add_item("shovel")
+        self.inventory.add_item("poop")
+        self.inventory.add_item("injector")
+        self.current_mission = missions[0]
 
     def load_map(self, map_json):
         pass
@@ -17,8 +24,12 @@ class Game:
 
     def draw(self):
         screen.fill((146, 252, 249))
-        map1.draw()
+        map1.draw_back(self.player.pos[1])
         self.player.draw()
+        map1.draw_fore(self.player.pos[1])
+        self.inventory.draw()
+        self.current_mission.draw()
+
 
     def handle_event(self, event):
         self.player.handle_event(event)

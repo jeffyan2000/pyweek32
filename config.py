@@ -5,6 +5,8 @@ pygame.init()
 pygame.display.set_caption("Neverending")
 pygame.mouse.set_visible(False)
 
+h_s = (0, 9, 16, 21, 24, 25, 24, 21, 16, 9, 0)
+
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 500
 DEFAULT_CENTER = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
@@ -51,6 +53,8 @@ for name in texture_names:
     if name.endswith(".png"):
         texture_lib[name[:-4]] = load(name[:-4])
 
+add_left(("person1",))
+
 # ----------------------------------------- Audio ----------------------------------------------
 
 
@@ -74,3 +78,7 @@ class AudioPlayer:
 
     def stop(self):
         self.channel.stop()
+
+
+font_mission_title = pygame.font.Font(os.path.join("fonts", "Action_Man_Bold.ttf"), 25)
+font_mission_desc = pygame.font.Font(os.path.join("fonts", "Action_Man_Bold.ttf"), 20)

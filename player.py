@@ -1,43 +1,35 @@
 from config import *
-
+from math import sqrt
 
 import math
 
 
 class Player:
     def __init__(self, world):
-        self.pos = [SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2]
+        self.pos = [350, 400]
         self.xDirection = 0  # tendency
         self.yDirection = 0
-        self.last_x = 0
+        self.facing_right = True
         self.world = world
-        self.inventory = ...
+        self.h = 191
+        self.w = 100
 
-        self.walk_cycle = TimedCycle(5, (3, 3, 3, 3, 3), [200,200,200,200,200])
+        self.walk_cycle = Cycle(11, 0)
 
 
     def draw(self):
-
-        if self.xDirection == -1:
-            self.last_x = -1
-            draw_at_frame(self.pos, "temp_left", self.walk_cycle.get_frame(), (64, 64))
-        elif self.xDirection == 1:
-            self.last_x = 1
-            draw_at_frame(self.pos, "temp_right", self.walk_cycle.get_frame(), (64, 64))
-        elif self.yDirection != 0:
-            if self.last_x == -1:
-
-                draw_at_frame(self.pos, "temp_left", self.walk_cycle.get_frame(), (64, 64))  # for not movement.
-            else:
-                draw_at_frame(self.pos, "temp_right", self.walk_cycle.get_frame(), (64, 64))  # for not movement.
+        pos = (self.pos[0] - (ENV["mouse_x"] - SCREEN_WIDTH / 2) * (100 / self.pos[1]) ** 2,
+               self.pos[1] - self.h - (ENV["mouse_y"] - SCREEN_HEIGHT / 2) * (100 / self.pos[1]) ** 2)
+        pygame.draw.ellipse(screen, (150, 150, 150), (pos[0], pos[1] + self.h - 20, self.w, 20))
+        texture = "person1"
+        if not self.facing_right:
+            texture = "person1_left"
+        if self.yDirection or self.xDirection:
+            screen.blit(texture_lib[texture], (pos[0], pos[1]-h_s[self.walk_cycle.get()]))
         else:
-            if self.last_x == -1:
-                draw_at_frame(self.pos, "temp_left", 0, (64, 64)) # for not movement.
-            elif self.last_x == 1:
-                draw_at_frame(self.pos, "temp_right", 0, (64, 64))  # for not movement.
-            else:
-                draw_at_frame(self.pos, "temp_right", 0, (64, 64))  # for not movement.
-
+            screen.blit(texture_lib[texture], pos)
+            if self.walk_cycle.tick != 0 or self.walk_cycle.current != 0:
+                self.walk_cycle.reset()
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
@@ -60,31 +52,25 @@ class Player:
                 self.yDirection -= 1
 
     def move(self, dx, dy):
-
-        if -10 <= self.pos[0] <= 750:
-            self.pos[0] += dx
-        else:
-            if -10 > self.pos[0]: # change the sign for continuation
-                self.pos[0] = -10
-            else:
-                self.pos[0] = 750
-        if 0 <= self.pos[1] <= 450:
-            self.pos[1] += dy
-        else:
-            if 0 > self.pos[1]: # change the sign for continuation
-                self.pos[1] = 0
-            else:
-                self.pos[1] = 450
+        self.pos[0] += dx
+        if dx > 0:
+            self.facing_right = True
+        elif dx < 0:
+            self.facing_right = False
+        self.pos[1] += dy
+        if self.pos[0] < 0:
+            self.pos[0] = 0
+        if self.pos[0] > 720:
+            self.pos[0] = 720
+        if self.pos[1] < 270:
+            self.pos[1] = 270
+        if self.pos[1] > 500:
+            self.pos[1] = 500
 
     def update(self):
 
         if self.xDirection != 0 or self.yDirection != 0:
-            self.move(ENV["delta_time"] * self.walk_cycle.get_movement() * self.xDirection,
-                      ENV["delta_time"] * self.walk_cycle.get_movement() * self.yDirection)
-            self.walk_cycle.tick()
-            # if self.walk_cycle.changed() and self.walk_cycle.get_frame() == 2:
-            #     self.world.animations.append(animation.WalkDust(self.pos, self.xDirection != -1)) # Walk dust
-
-
-
-        #ENV["global_offset"] = (self.pos[0] - self.offset[0], self.pos[1] - self.offset[1])
+            speed = 6
+            if self.xDirection != 0 and self.yDirection != 0:
+                speed = 6/sqrt(2)
+            self.move(speed * self.xDirection, speed * self.yDirection)
