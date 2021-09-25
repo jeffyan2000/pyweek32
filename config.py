@@ -2,7 +2,7 @@ import pygame, sys, math, os, random
 from cycles import *
 
 pygame.init()
-pygame.display.set_caption("Neverending")
+pygame.display.set_caption("regret, once again")
 pygame.mouse.set_visible(False)
 
 h_s = (0, 9, 16, 21, 24, 25, 24, 21, 16, 9, 0)
