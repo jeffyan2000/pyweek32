@@ -1,25 +1,20 @@
 from config import *
 
 class Item:
-    def __init__(self, name, desc, texture):
-        self.name = name
-        self.desc = desc
-        self.texture = texture_lib[texture]
-
-
-items = {
-    "shovel": ("this is a shovel", "item_shovel"),
-    "poop": ("this is a poop", "item_poop"),
-    "injector": ("this is an injector", "item_injector")
-}
+    def __init__(self, texture):
+        self.texture = texture_lib["item_" + texture]
+        self.name = texture
 
 
 class Inventory:
     def __init__(self):
         self.items = []
 
+    def clear(self):
+        self.items = []
+
     def add_item(self, name):
-        self.items.append(Item(name, items[name][0], items[name][1]))
+        self.items.append(Item(name))
 
     def has_item(self, name):
         for item in self.items:
@@ -28,7 +23,7 @@ class Inventory:
         return False
 
     def consume_item(self, name):
-        length = len(items)
+        length = len(self.items)
         for i in range(length):
             if self.items[i].name == name:
                 del self.items[i]

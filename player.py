@@ -6,7 +6,7 @@ import math
 
 class Player:
     def __init__(self, game):
-        self.pos = [350, 400]
+        self.pos = [150, 400]
         self.xDirection = 0  # tendency
         self.yDirection = 0
         self.facing_right = True
@@ -54,7 +54,46 @@ class Player:
                 if ENV["item_interact"]:
                     item = ENV["item_interact"]
                     if item.item_id == 1:
-                        self.game.start_chat_scene("vase")
+                        self.game.start_chat_scene("door", next_map=True)
+                    elif item.item_id == 2:
+                        self.game.start_chat_scene("mom", next_map=True)
+                    elif item.item_id == 3:
+                        self.game.start_chat_scene("mystery", next_map=True)
+                    elif item.item_id == 4:
+                        self.game.start_chat_scene("box", next_map=True)
+                    elif item.item_id == 5:
+                        self.game.start_chat_scene("medicine")
+                        self.game.current_map.remove_item(5)
+                        self.game.inventory.add_item("medicine")
+                    elif item.item_id == 6:
+                        if self.game.inventory.has_item("medicine"):
+                            self.game.start_chat_scene("table2", next_map=True)
+                        else:
+                            self.game.start_chat_scene("table1")
+                    elif item.item_id == 7:
+                        self.game.start_chat_scene("shovel")
+                        self.game.current_map.remove_item(7)
+                        self.game.inventory.add_item("shovel")
+                    elif item.item_id == 8:
+                        if self.game.inventory.has_item("shovel"):
+                            self.game.start_chat_scene("hole2", next_map=True)
+                        else:
+                            self.game.start_chat_scene("hole1")
+                    elif item.item_id == 9:
+                        self.game.start_chat_scene("injector")
+                        self.game.current_map.remove_item(9)
+                        self.game.inventory.add_item("injector")
+                    elif item.item_id == 10:
+                        if self.game.inventory.has_item("injector"):
+                            self.game.start_chat_scene("cream2", next_map=True)
+                        else:
+                            self.game.start_chat_scene("cream1")
+                    elif item.item_id == 11:
+                        self.game.start_chat_scene("q12", next_map=True)
+                    elif item.item_id == 12:
+                        self.game.start_chat_scene("q22", next_map=True)
+                    elif item.item_id == 13:
+                        self.game.start_chat_scene("q32", next_map=True)
 
     def move(self, dx, dy):
         self.pos[0] += dx

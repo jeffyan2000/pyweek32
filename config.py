@@ -20,8 +20,6 @@ while q_speed < 70:
 for _ in range(20):
     q_s.append(-800)
 
-print(q_s)
-
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 500
 DEFAULT_CENTER = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
@@ -100,7 +98,7 @@ font_mission_title = pygame.font.Font(os.path.join("fonts", "Action_Man_Bold.ttf
 font_mission_desc = pygame.font.Font(os.path.join("fonts", "Action_Man_Bold.ttf"), 20)
 font_chat_name = pygame.font.Font(os.path.join("fonts", "Action_Man_Bold.ttf"), 28)
 font_chat_content = pygame.font.Font(os.path.join("fonts", "Action_Man_Bold.ttf"), 30)
-font_next_day = pygame.font.Font(os.path.join("fonts", "Romelio.ttf"), 50)
+font_next_day = pygame.font.Font(os.path.join("fonts", "Romelio.ttf"), 40)
 
 
 from math import sqrt
