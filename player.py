@@ -5,12 +5,12 @@ import math
 
 
 class Player:
-    def __init__(self, world):
+    def __init__(self, game):
         self.pos = [350, 400]
         self.xDirection = 0  # tendency
         self.yDirection = 0
         self.facing_right = True
-        self.world = world
+        self.game = game
         self.h = 191
         self.w = 100
 
@@ -21,9 +21,9 @@ class Player:
         pos = (self.pos[0] - (ENV["mouse_x"] - SCREEN_WIDTH / 2) * (100 / self.pos[1]) ** 2,
                self.pos[1] - self.h - (ENV["mouse_y"] - SCREEN_HEIGHT / 2) * (100 / self.pos[1]) ** 2)
         pygame.draw.ellipse(screen, (150, 150, 150), (pos[0], pos[1] + self.h - 20, self.w, 20))
-        texture = "person1"
+        texture = "me"
         if not self.facing_right:
-            texture = "person1_left"
+            texture = "me_left"
         if self.yDirection or self.xDirection:
             screen.blit(texture_lib[texture], (pos[0], pos[1]-h_s[self.walk_cycle.get()]))
         else:
@@ -50,6 +50,11 @@ class Player:
                 self.yDirection += 1
             elif event.key == pygame.K_s:
                 self.yDirection -= 1
+            elif event.key == pygame.K_k:
+                if ENV["item_interact"]:
+                    item = ENV["item_interact"]
+                    if item.item_id == 1:
+                        self.game.start_chat_scene("vase")
 
     def move(self, dx, dy):
         self.pos[0] += dx

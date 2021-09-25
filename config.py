@@ -6,6 +6,21 @@ pygame.display.set_caption("Neverending")
 pygame.mouse.set_visible(False)
 
 h_s = (0, 9, 16, 21, 24, 25, 24, 21, 16, 9, 0)
+q_s = [800, 800, 800, 800, 800, 800]
+q_speed = 70
+while q_speed > 0:
+    q_s.append((q_s[-1] - q_speed))
+    q_speed -= 5
+for _ in range(50):
+    q_s.append(275)
+q_speed = 0
+while q_speed < 70:
+    q_s.append((q_s[-1] - q_speed))
+    q_speed += 5
+for _ in range(20):
+    q_s.append(-800)
+
+print(q_s)
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 500
@@ -16,7 +31,8 @@ clock = pygame.time.Clock()
 ENV = {
     "delta_time": 0,
     "global_offset": (0, 0),
-    "mouse_x": 0, "mouse_y": 0
+    "mouse_x": 0, "mouse_y": 0,
+    "item_interact": None,
 }
 
 
@@ -53,7 +69,7 @@ for name in texture_names:
     if name.endswith(".png"):
         texture_lib[name[:-4]] = load(name[:-4])
 
-add_left(("person1",))
+add_left(("me",))
 
 # ----------------------------------------- Audio ----------------------------------------------
 
@@ -82,3 +98,12 @@ class AudioPlayer:
 
 font_mission_title = pygame.font.Font(os.path.join("fonts", "Action_Man_Bold.ttf"), 25)
 font_mission_desc = pygame.font.Font(os.path.join("fonts", "Action_Man_Bold.ttf"), 20)
+font_chat_name = pygame.font.Font(os.path.join("fonts", "Action_Man_Bold.ttf"), 28)
+font_chat_content = pygame.font.Font(os.path.join("fonts", "Action_Man_Bold.ttf"), 30)
+font_next_day = pygame.font.Font(os.path.join("fonts", "Romelio.ttf"), 50)
+
+
+from math import sqrt
+
+def distance(pos1, pos2):
+    return sqrt((pos1[0] - pos2[0])**2 + (pos1[1] - pos2[1])**2)
