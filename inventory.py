@@ -15,6 +15,7 @@ class Inventory:
 
     def add_item(self, name):
         self.items.append(Item(name))
+        se_grab.play_once()
 
     def has_item(self, name):
         for item in self.items:

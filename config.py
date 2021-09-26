@@ -75,7 +75,7 @@ add_left(("me",))
 class AudioPlayer:
     def __init__(self, id_in, type_in, volume=0.2):
         self.id = id_in
-        self.music = pygame.mixer.Sound(id_in + ".ogg")
+        self.music = pygame.mixer.Sound(os.path.join("audio", id_in + ".mp3"))
         self.music.set_volume(volume)
         if type_in == "bg":
             self.channel = pygame.mixer.Channel(1)
@@ -92,6 +92,14 @@ class AudioPlayer:
 
     def stop(self):
         self.channel.stop()
+
+bg_m = AudioPlayer("bgm_1", "bg")
+bg_g = AudioPlayer("bgm_gameplay", "bg")
+
+se_next = AudioPlayer("transition_day", "se")
+se_grab = AudioPlayer("item", "sn")
+sn_walk = AudioPlayer("walk_cute", "sn")
+sn_interact = AudioPlayer("click", "sn")
 
 
 font_mission_title = pygame.font.Font(os.path.join("fonts", "Action_Man_Bold.ttf"), 25)

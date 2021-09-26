@@ -26,6 +26,8 @@ class Player:
             texture = "me_left"
         if self.yDirection or self.xDirection:
             screen.blit(texture_lib[texture], (pos[0], pos[1]-h_s[self.walk_cycle.get()]))
+            if self.walk_cycle.changed() and self.walk_cycle.current == 0:
+                sn_walk.play_once()
         else:
             screen.blit(texture_lib[texture], pos)
             if self.walk_cycle.tick != 0 or self.walk_cycle.current != 0:
@@ -53,6 +55,7 @@ class Player:
             elif event.key == pygame.K_k:
                 if ENV["item_interact"]:
                     item = ENV["item_interact"]
+                    flag = True
                     if item.item_id == 1:
                         self.game.start_chat_scene("door", next_map=True)
                     elif item.item_id == 2:
@@ -94,6 +97,10 @@ class Player:
                         self.game.start_chat_scene("q22", next_map=True)
                     elif item.item_id == 13:
                         self.game.start_chat_scene("q32", next_map=True)
+                    else:
+                        flag = False
+                    if flag:
+                        sn_interact.play_once()
 
     def move(self, dx, dy):
         self.pos[0] += dx

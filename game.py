@@ -19,8 +19,8 @@ class Game:
         self.current_chat_scene = ChatScene("start")
         self.trans_scene = NextScene("Day 1: bedroom")
 
-
     def next_map(self):
+        se_next.play_once()
         if self.current_map_num == 15:
             self.trans_scene = EndScene()
             return
@@ -120,10 +120,12 @@ class Game:
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_k:
                     self.current_chat_scene.next_dialog()
+                    sn_interact.play_once()
         elif not self.current_chat_scene and not self.trans_scene:
             self.player.handle_event(event)
 
     def start(self):
+        se_next.play_once()
         self.update()
         while not self.dead:
             ENV['delta_time'] = clock.tick(self.fps_cap)/1000
